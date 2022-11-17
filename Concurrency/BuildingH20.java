@@ -16,10 +16,11 @@ public class BuildingH20 {
     public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
     	try {
         	hydrogen.acquire();
-    		barrier.await();
+    		barrier.await(); // cyclic barrier allows threads to all wait for each other until the barrier is reached, so three threads release once 3 is hit
+                // and 3 is only hit when 2H, 1O because of semaphores
     		// releaseHydrogen.run() outputs "H". Do not change or remove this line.
-            releaseHydrogen.run();
-            hydrogen.release();
+                releaseHydrogen.run();
+                hydrogen.release();
     	} catch (BrokenBarrierException exc) {
     		exc.printStackTrace();
     	}
